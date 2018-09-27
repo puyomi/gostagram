@@ -63,10 +63,10 @@ DJANGO_APPS = [
     'django.contrib.admin',
 ]
 THIRD_PARTY_APPS = [
-    'allauth',
-    'allauth.account',
-    'allauth.socialaccount',
-    'rest_framework',
+    'allauth', # Registration
+    'allauth.account', # Registration
+    'allauth.socialaccount', # Registration
+    'rest_framework', # REST framework
 ]
 LOCAL_APPS = [
     'gostagram.users.apps.UsersAppConfig',
