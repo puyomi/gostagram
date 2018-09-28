@@ -3,6 +3,7 @@ from rest_framework.response import Response
 from rest_framework import status
 from . import models, serializers
 
+# User(self+following_user) Feed 
 class Feed(APIView):
 
     def get(self, request, format=None):
@@ -27,9 +28,10 @@ class Feed(APIView):
 
         return Response(data=serializer.data)
 
+# Like on Image
 class LikeImage(APIView):
 
-    def get(self, request, image_id, format=None):
+    def post(self, request, image_id, format=None):
 
         user = request.user
         try:
@@ -51,3 +53,43 @@ class LikeImage(APIView):
             )
 
         return Response(status=status.HTTP_201_CREATED)
+
+# comment post
+class CommentOnImage(APIView):
+
+    def post(self, request, image_id, format=None):
+
+        try:
+            found_image = models.Image.objects.get(id=image_id)
+        except models.Image.DoesNotExist:
+            return Response(status=status.HTTP_404_NOT_FOUND)
+        
+        user = request.user
+        serializer = serializers.CommentSerializer(data=request.data)
+
+        if serializer.is_valid():
+            serializer.save(creator=user, image=found_image)
+            return Response(data=serializer.data, status=status.HTTP_201_CREATED)
+
+        else:
+            return Response(data=serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+# comment delete
+class Comment(APIView):
+
+    def delete(self, request, comment_id, format=None):
+
+        user = request.user
+        try:
+            preexisting_comment = models.Comment.objects.get(id=comment_id, creator=user)
+            preexisting_comment.delete()
+            return Response(status=status.HTTP_204_NO_CONTENT)
+
+        except models.Comment.DoesNotExist:
+            return Response(status=status.HTTP_404_NOT_FOUND)
+
+        
+
+        
+
