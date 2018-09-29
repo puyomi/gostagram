@@ -4,6 +4,14 @@ from gostagram.users import models as user_models
 from taggit_serializer.serializers import TagListSerializerField, TaggitSerializer
 
 
+
+class SmallImageSerializer(serializers.ModelSerializer):
+
+    """Used for Notifications"""
+    class Meta:
+        model = models.Image
+        fields = ('id','file')
+
 class ListImageSerializer(serializers.ModelSerializer):
     
     class Meta:
@@ -14,8 +22,6 @@ class ListImageSerializer(serializers.ModelSerializer):
             'like_count',
             'comment_count'
         )
-
-
 
 class FeedUserSerializer(serializers.ModelSerializer):
     

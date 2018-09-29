@@ -23,6 +23,10 @@ urlpatterns = [
         "images/",
         include("gostagram.images.urls", namespace="images"),
     ),
+    path(
+        "notifications/",
+        include("gostagram.notifications.urls", namespace="notifications"),
+    ),
     path("accounts/", include("allauth.urls")),
     # Your stuff: custom urls includes go here
 ] + static(

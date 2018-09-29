@@ -71,8 +71,11 @@ THIRD_PARTY_APPS = [
 ]
 LOCAL_APPS = [
     'gostagram.users.apps.UsersAppConfig',
-    'gostagram.images.apps.ImagesConfig',
     # Your stuff: custom apps go here
+    
+    'gostagram.images.apps.ImagesConfig', # images app
+    'gostagram.notifications.apps.NotificationsConfig', # notifications app
+    
 ]
 # https://docs.djangoproject.com/en/dev/ref/settings/#installed-apps
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS
