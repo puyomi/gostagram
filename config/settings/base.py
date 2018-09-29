@@ -67,6 +67,7 @@ THIRD_PARTY_APPS = [
     'allauth.account', # Registration
     'allauth.socialaccount', # Registration
     'rest_framework', # REST framework
+    'taggit', # Taggit
 ]
 LOCAL_APPS = [
     'gostagram.users.apps.UsersAppConfig',
@@ -238,3 +239,4 @@ SOCIALACCOUNT_ADAPTER = 'gostagram.users.adapters.SocialAccountAdapter'
 
 # Your stuff...
 # ------------------------------------------------------------------------------
+TAGGIT_CASE_INSENSITIVE = True

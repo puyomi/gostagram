@@ -1,8 +1,10 @@
 from rest_framework import serializers
 from . import models
 from gostagram.users import models as user_models
+from taggit_serializer.serializers import TagListSerializerField, TaggitSerializer
 
-class UserProfileImageSerializer(serializers.ModelSerializer):
+
+class ListImageSerializer(serializers.ModelSerializer):
     
     class Meta:
         model = models.Image
@@ -38,12 +40,11 @@ class CommentSerializer(serializers.ModelSerializer):
         )
 
 
-
-
 class ImageSerializer(serializers.ModelSerializer):
 
     comments = CommentSerializer(many=True)
     creator = FeedUserSerializer()
+    tags = TagListSerializerField()
 
     class Meta:
         model = models.Image
@@ -55,6 +56,7 @@ class ImageSerializer(serializers.ModelSerializer):
             'caption',
             'comments',
             'like_count',
+            'tags',
         )
 
 
