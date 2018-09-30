@@ -15,5 +15,6 @@ class NotificationSerializers(serializers.ModelSerializer):
             'noti_to_user',
             'noti_type',
             'noti_image',
-            'created_at'
+            'noti_comment',
+            'created_at',
         )

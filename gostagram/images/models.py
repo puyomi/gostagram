@@ -46,6 +46,9 @@ class Comment(TimeStampedModel):
 
     def __str__(self):
         return self.message
+        
+    class Meta:
+        ordering = ['-created_at']
 
 class Like(TimeStampedModel):
 

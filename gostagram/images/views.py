@@ -2,30 +2,26 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 from . import models, serializers
+from gostagram.notifications import views
 
 # User(self+following_user) Feed 
 class Feed(APIView):
 
     def get(self, request, format=None):
-
         user = request.user
-
         following_users = user.following.all()
-
         image_list = []
-
         for following_user in following_users:
-
             user_images = following_user.images.all()[:2]
-
             for image in user_images:
-
                 image_list.append(image)
 
+        my_images = user.images.all()[:2]
+        for image in my_images:
+            image_list.append(image)
+        
         sorted_list = sorted(image_list, key=lambda image:image.created_at, reverse=True)
-
         serializer = serializers.ImageSerializer(sorted_list, many=True)
-
         return Response(data=serializer.data)
 
 # Like on Image
@@ -48,6 +44,10 @@ class LikeImage(APIView):
                 image = found_image
             )
             new_like.save()
+
+            # create_notification
+            views.create_notification(user, found_image.creator, "like", image=found_image, comment=None)
+            
             return Response(status=status.HTTP_201_CREATED)
 
 class UnLikeImage(APIView):
@@ -82,6 +82,10 @@ class CommentOnImage(APIView):
 
         if serializer.is_valid():
             serializer.save(creator=user, image=found_image)
+
+            # create_notification
+            views.create_notification(user, found_image.creator, "comment", image=found_image, comment=serializer.data['message'])
+            
             return Response(data=serializer.data, status=status.HTTP_201_CREATED)
 
         else:
@@ -102,6 +106,18 @@ class Comment(APIView):
         except models.Comment.DoesNotExist:
             return Response(status=status.HTTP_404_NOT_FOUND)
 
+
+class ModerateComment(APIView):
+
+    def delete(self, request, image_id, comment_id, format=None):
+
+        user = request.user
+        try:
+            comment_to_delete = models.Comment.objects.get(id=comment_id, image__id=image_id, image__creator = user)
+            comment_to_delete.delete()
+        except models.Comment.DoesNotExist:
+            return Response(status=status.HTTP_404_NOT_FOUND)            
+        return Response(status=status.HTTP_204_NO_CONTENT)
 
 class Search(APIView):
 

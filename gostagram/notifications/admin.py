@@ -9,6 +9,7 @@ class NotificationAdmin(admin.ModelAdmin):
         'noti_to_user',
         'noti_type',
         'noti_image',
+        'noti_comment',
         'created_at',
         'updated_at',
     )
