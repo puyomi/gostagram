@@ -4,7 +4,6 @@ from gostagram.users import models as user_models
 from taggit_serializer.serializers import TagListSerializerField, TaggitSerializer
 
 
-
 class SmallImageSerializer(serializers.ModelSerializer):
 
     """Used for Notifications"""
@@ -31,7 +30,6 @@ class FeedUserSerializer(serializers.ModelSerializer):
             'username',
             'profile_image'
         )
-
 
 class CommentSerializer(serializers.ModelSerializer):
     
@@ -66,3 +64,12 @@ class ImageSerializer(serializers.ModelSerializer):
         )
 
 
+class InputImageSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = models.Image
+        fields = (
+            'file',
+            'location',
+            'caption',
+        )

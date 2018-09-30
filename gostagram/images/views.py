@@ -2,7 +2,9 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 from . import models, serializers
+from gostagram.users import models as user_models
 from gostagram.notifications import views
+from gostagram.users import serializers as user_serializers
 
 # User(self+following_user) Feed 
 class Feed(APIView):
@@ -24,8 +26,62 @@ class Feed(APIView):
         serializer = serializers.ImageSerializer(sorted_list, many=True)
         return Response(data=serializer.data)
 
+class DetailedImage(APIView):
+
+    def find_own_image(self, image_id, user):
+        try:
+            image = models.Image.objects.get(id=image_id, creator=user)
+            return image
+        except models.Image.DoesNotExist:
+            return None
+
+    def get(self, request, image_id, format=None):
+
+        try:
+            found_image = models.Image.objects.get(id=image_id)
+            serializer = serializers.ImageSerializer(found_image)
+            return Response(data=serializer.data, status=status.HTTP_200_OK)
+        except models.Image.DoesNotExist:
+            return Response(status=status.HTTP_404_NOT_FOUND)
+
+    def put(self, request, image_id, format=None):
+        user = request.user
+        image = self.find_own_image(image_id, user)
+        if image is None:
+            return Response(status=status.HTTP_400_BAD_REQUEST)
+
+        serializer = serializers.InputImageSerializer(image, data=request.data, partial=True)
+        print(request.data)
+        if serializer.is_valid():
+            serializer.save(creator=user)
+            return Response(data=serializer.data, status=status.HTTP_201_CREATED)
+        else:
+            return Response(data=serializer.errors ,status=status.HTTP_400_BAD_REQUEST)
+
+    def delete(self, request, image_id, format=None):
+        user = request.user
+        image = self.find_own_image(image_id, user)
+        if image is None:
+            return Response(status=status.HTTP_400_BAD_REQUEST)
+        else:
+            image.delete()
+            return Response(status=status.HTTP_204_NO_CONTENT)
+
+
+
 # Like on Image
 class LikeImage(APIView):
+
+    def get(self, request, image_id, format=None):
+
+        likes = models.Like.objects.filter(image__id=image_id)
+        like_creator_ids = likes.values('creator_id')
+        likes_list = user_models.User.objects.filter(id__in=like_creator_ids)
+        serializer = user_serializers.ListUserSerializer(likes_list, many=True)
+        return Response(data=serializer.data ,status=status.HTTP_200_OK)
+
+
+
     def post(self, request, image_id, format=None):
         user = request.user
         try:

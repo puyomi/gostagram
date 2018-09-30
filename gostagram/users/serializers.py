@@ -2,10 +2,10 @@ from rest_framework import serializers
 from . import models
 from gostagram.images import serializers as images_serializers
 
+
 class ListUserSerializer(serializers.ModelSerializer):
 
     class Meta:
-
         model = models.User
         fields = (
             'id',
