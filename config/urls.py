@@ -4,17 +4,20 @@ from django.conf.urls.static import static
 from django.contrib import admin
 from django.views.generic import TemplateView
 from django.views import defaults as default_views
+from rest_framework_jwt.views import obtain_jwt_token
+from gostagram.users import views as user_views
+
 
 urlpatterns = [
-    path("", TemplateView.as_view(template_name="pages/home.html"), name="home"),
-    path(
-        "about/",
-        TemplateView.as_view(template_name="pages/about.html"),
-        name="about",
-    ),
     # Django Admin, use {% url 'admin:index' %}
     path(settings.ADMIN_URL, admin.site.urls),
     # User management
+
+    # path("api-token-auth/", obtain_jwt_token),
+
+    path("rest-auth/", include('rest_auth.urls')),
+    path("rest-auth/registration/", include('rest_auth.registration.urls')),
+    path("rest-auth/facebook/", user_views.FacebookLogin.as_view(), name='fb_login'),
     path(
         "users/",
         include("gostagram.users.urls", namespace="users"),

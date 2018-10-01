@@ -7,7 +7,7 @@ from gostagram.notifications import views
 from gostagram.users import serializers as user_serializers
 
 # User(self+following_user) Feed 
-class Feed(APIView):
+class Images(APIView):
 
     def get(self, request, format=None):
         user = request.user
@@ -25,6 +25,17 @@ class Feed(APIView):
         sorted_list = sorted(image_list, key=lambda image:image.created_at, reverse=True)
         serializer = serializers.ImageSerializer(sorted_list, many=True)
         return Response(data=serializer.data)
+
+    def post(self, request, format=None):
+
+        user = request.user
+        serializer = serializers.InputImageSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save(creator=user)
+            return Response(data=serializer.data, status=status.HTTP_201_CREATED)
+        else:
+            return Response(data=serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
 
 class DetailedImage(APIView):
 
@@ -184,7 +195,6 @@ class Search(APIView):
         if hashtags is not None:
             hashtags = hashtags.split(",")
             images = models.Image.objects.filter(tags__name__in=hashtags).distinct()
-            print(hashtags)
             serialize = serializers.ListImageSerializer(images, many=True)
             return Response(data=serialize.data ,status=status.HTTP_200_OK)
         else:
