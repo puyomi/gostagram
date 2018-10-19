@@ -1,12 +1,12 @@
 from django.conf import settings
-from django.urls import include, path
+from django.urls import include, path, re_path
 from django.conf.urls.static import static
 from django.contrib import admin
 from django.views.generic import TemplateView
 from django.views import defaults as default_views
 from rest_framework_jwt.views import obtain_jwt_token
 from gostagram.users import views as user_views
-from gostagram import views as main_view
+from gostagram import views
 
 
 urlpatterns = [
@@ -32,7 +32,9 @@ urlpatterns = [
         include("gostagram.notifications.urls", namespace="notifications"),
     ),
     path("accounts/", include("allauth.urls")),
-    path("", main_view.ReactAppView.as_view()),
+    
+    # path("", views.ReactAppView.as_view()),   << catch all url
+    re_path(r'^', views.ReactAppView.as_view()),
 
     # Your stuff: custom urls includes go here
 ] + static(
