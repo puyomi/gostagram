@@ -18,3 +18,5 @@ class NotificationSerializers(serializers.ModelSerializer):
             'noti_comment',
             'created_at',
         )
+
+        
