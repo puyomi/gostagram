@@ -1,0 +1,44 @@
+msgid ""
+msgstr ""
+"Language: jp"
+
+#: src/components/Footer/index.js
+msgid "INSTAGRAM정보"
+msgstr "jeungbo"
+
+#: src/components/Footer/index.js
+msgid "지원"
+msgstr "jiwon"
+
+#: src/components/Footer/index.js
+msgid "홍보센터"
+msgstr "hongbo"
+
+#: src/components/Footer/index.js
+msgid "API"
+msgstr ""
+
+#: src/components/Footer/index.js
+msgid "채용정보"
+msgstr ""
+
+#: src/components/Footer/index.js
+msgid "개인정보처리방침"
+msgstr ""
+
+#: src/components/Footer/index.js
+msgid "약관"
+msgstr ""
+
+#: src/components/Footer/index.js
+msgid "프로필"
+msgstr ""
+
+#: src/components/Footer/index.js
+msgid "해쉬태그"
+msgstr ""
+
+#: src/components/Footer/index.js
+msgid "언어"
+msgstr ""
+
