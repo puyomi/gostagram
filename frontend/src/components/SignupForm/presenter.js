@@ -12,7 +12,7 @@ const SignupForm = props => (
       autoLoad={false}
       fields="name,email,picture"
       callback={props.handleFacebookLogin}
-      cssClass={formStyles.facebookSignupLogin}
+      cssClass={formStyles.button}
       icon="fa-facebook-official"
       textButton="Facebook으로 로그인"
     />

@@ -4,6 +4,22 @@
 
 // action creators
 
+// API actions
+
+function facebookLogin(access_token) {
+  return dispatch => {
+    fetch("/users/login/facebook", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        access_token
+      })
+    });
+  };
+}
+
 // initial state
 
 const initialState = {

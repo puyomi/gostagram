@@ -37,7 +37,7 @@
     svg {
       margin-right: 10px;
     }
-    i{
+    i {
       font-size: 18px;
       margin-right: 5px;
     }
@@ -75,7 +75,7 @@
     justify-content: center;
     margin-bottom: 25px;
     cursor: pointer;
-    border:0;
+    border: 0;
     font-size: $normal-font-size;
     background-color: white;
     i {
@@ -83,16 +83,8 @@
       margin-right: 5px;
     }
     &:focus,
-    &:active{
+    &:active {
       outline: none;
-    }
-  }
-  .facebookSignupLogin{
-    @include blueButton();
-    width: 100%;
-    i {
-      font-size: 16px;
-      margin-right: 5px;
     }
   }
   .forgotLink {
