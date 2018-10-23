@@ -8,7 +8,7 @@
 
 function facebookLogin(access_token) {
   return dispatch => {
-    fetch("/users/login/facebook", {
+    fetch("/users/login/facebook/", {
       method: "POST",
       headers: {
         "Content-Type": "application/json"
@@ -16,7 +16,10 @@ function facebookLogin(access_token) {
       body: JSON.stringify({
         access_token
       })
-    });
+    })
+      .then(response => response.json())
+      .then(json => console.log(json))
+      .catch(err => console.log(err));
   };
 }
 
@@ -37,6 +40,11 @@ function reducer(state = initialState, action) {
 // reducer functions
 
 // exports
+const actionCreators = {
+  facebookLogin
+};
+
+export { actionCreators };
 
 // reducer export
 
