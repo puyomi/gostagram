@@ -63,25 +63,25 @@ DJANGO_APPS = [
     'django.contrib.admin',
 ]
 THIRD_PARTY_APPS = [
-    'allauth', # Registration
-    'allauth.account', # Registration
-    'allauth.socialaccount', # Registration
-    'rest_framework', # REST framework
-    'taggit', # Taggit
-    'taggit_serializer', # Tag Serializer
-    'rest_auth', # Django-rest-auth
-    'rest_framework.authtoken', # 실제로는 미설치함 rest_auth 때문에 fake로입력
-    'rest_auth.registration', # enable registration
-    'allauth.socialaccount.providers.facebook', # facebook Login
-    'corsheaders', # To accept request from REACT
+    'allauth',  # Registration
+    'allauth.account',  # Registration
+    'allauth.socialaccount',  # Registration
+    'rest_framework',  # REST framework
+    'taggit',  # Taggit
+    'taggit_serializer',  # Tag Serializer
+    'rest_auth',  # Django-rest-auth
+    'rest_framework.authtoken',  # 실제로는 미설치함 rest_auth 때문에 fake로입력
+    'rest_auth.registration',  # enable registration
+    'allauth.socialaccount.providers.facebook',  # facebook Login
+    'corsheaders',  # To accept request from REACT
 ]
 LOCAL_APPS = [
     'gostagram.users.apps.UsersAppConfig',
     # Your stuff: custom apps go here
-    
-    'gostagram.images.apps.ImagesConfig', # images app
-    'gostagram.notifications.apps.NotificationsConfig', # notifications app
-    
+
+    'gostagram.images.apps.ImagesConfig',  # images app
+    'gostagram.notifications.apps.NotificationsConfig',  # notifications app
+
 ]
 # https://docs.djangoproject.com/en/dev/ref/settings/#installed-apps
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS
@@ -247,7 +247,7 @@ SOCIALACCOUNT_ADAPTER = 'gostagram.users.adapters.SocialAccountAdapter'
 
 # Your stuff...
 # ------------------------------------------------------------------------------
-TAGGIT_CASE_INSENSITIVE = True # taggit config
+TAGGIT_CASE_INSENSITIVE = True  # taggit config
 
 
 # JWT Configurations
@@ -263,9 +263,45 @@ REST_FRAMEWORK = {
 # REST-AUTH Configurations
 REST_USE_JWT = True
 ACCOUNT_LOGOUT_ON_GET = True
+SOCIALACCOUNT_QUERY_EMAIL = True
 CORS_ORIGIN_ALLOW_ALL = True
 
 # 토큰 만료 방지
-JWT_AUTH= {
-    'JWT_VERIFY_EXPIRATION':False
+JWT_AUTH = {
+    'JWT_VERIFY_EXPIRATION': False
+}
+
+SOCIALACCOUNT_PROVIDERS = {
+    'facebook': {
+        'SCOPE': [
+            'email',
+            'public_profile',
+            'user_friends'
+        ],
+        'FIELDS': [
+            'id',
+            'email',
+            'name',
+            'first_name',
+            'last_name',
+            'verified',
+            'locale',
+            'timezone',
+            'link',
+            'gender',
+            'updated_time',
+            'picture'
+        ],
+        'AUTH_PARAMS': {
+            # 'auth_type': 'reauthenticate'
+        },
+        'METHOD': 'oauth2',
+        # 'LOCALE_FUNC': 'path.to.callable',
+        'VERIFIED_EMAIL': True,
+        'VERSION': 'v2.4'
+    }
+}
+
+REST_AUTH_REGISTER_SERIALIZERS = {
+    'REGISTER_SERIALIZER': 'gostagram.users.serializers.SignUpSerializer'
 }

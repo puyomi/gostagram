@@ -30,17 +30,17 @@ const SignupForm = props => (
         className={formStyles.textInput}
         type="text"
         placeholder="성명"
-        value={props.usernameValue}
+        value={props.nameValue}
         onChange={props.handleInputChange}
-        name="username"
+        name="name"
       />
       <input
         className={formStyles.textInput}
-        type="username"
-        placeholder="사용자 이름"
-        value={props.nicknameValue}
+        type="text"
+        placeholder="사용자 아이디"
+        value={props.usernameValue}
         onChange={props.handleInputChange}
-        name="nickname"
+        name="username"
       />
       <input
         className={formStyles.textInput}
@@ -59,7 +59,7 @@ const SignupForm = props => (
 SignupForm.propTypes = {
   emailValue: PropTypes.string.isRequired,
   usernameValue: PropTypes.string.isRequired,
-  nicknameValue: PropTypes.string.isRequired,
+  nameValue: PropTypes.string.isRequired,
   passwordValue: PropTypes.string.isRequired,
   handleInputChange: PropTypes.func.isRequired,
   handleSubmit: PropTypes.func.isRequired
