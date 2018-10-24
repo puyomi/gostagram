@@ -33,7 +33,6 @@ class Container extends Component {
   _handleSubmit = event => {
     event.preventDefault();
     // redux action will be here
-    console.log(this.state);
   };
   _handleFacebookLogin = response => {
     const { facebookLogin } = this.props;

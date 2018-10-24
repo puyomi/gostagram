@@ -7,7 +7,7 @@
 // API actions
 
 function facebookLogin(access_token) {
-  return dispatch => {
+  return function(dispatch) {
     fetch("/users/login/facebook/", {
       method: "POST",
       headers: {
@@ -22,7 +22,6 @@ function facebookLogin(access_token) {
       .catch(err => console.log(err));
   };
 }
-
 // initial state
 
 const initialState = {
