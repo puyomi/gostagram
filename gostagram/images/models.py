@@ -1,6 +1,7 @@
 from django.db import models
 from gostagram.users import models as user_models
 from taggit.managers import TaggableManager
+from django.contrib.humanize.templatetags.humanize import naturaltime
 
 
 class TimeStampedModel(models.Model):
@@ -29,6 +30,10 @@ class Image(TimeStampedModel):
     def comment_count(self):
         return self.comments.all().count()
 
+    @property
+    def natural_time(self):
+        return naturaltime(self.created_at)
+
     def __str__(self):
         return '{} - {}'.format(self.location, self.caption)
 
@@ -48,7 +53,7 @@ class Comment(TimeStampedModel):
         return self.message
         
     class Meta:
-        ordering = ['-created_at']
+        ordering = ['created_at']
 
 class Like(TimeStampedModel):
 
