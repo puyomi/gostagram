@@ -73,7 +73,9 @@ function createAccount(username, password, email, name) {
     })
       .then(response => response.json())
       .then(json => {
-        dispatch(saveToken(json.token));
+        if (json.token) {
+          dispatch(saveToken(json.token));
+        }
       })
       .catch(err => console.log(err));
   };

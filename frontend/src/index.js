@@ -7,14 +7,13 @@ import App from "components/App";
 import I18n from "redux-i18n";
 import { translations } from "translations";
 
-
 ReactDOM.render(
   <Provider store={store}>
-    <ConnectedRouter history={history}>
-      <I18n translations={translations} initialLang="kr" fallbackLang="kr">
+    <I18n translations={translations} initialLang="kr" fallbackLang="kr">
+      <ConnectedRouter history={history}>
         <App />
-      </I18n>
-    </ConnectedRouter>
+      </ConnectedRouter>
+    </I18n>
   </Provider>,
   document.getElementById("root")
 );

@@ -52,7 +52,7 @@ const Navigation = (props, context) => {
   );
 };
 
-Navigation.propTypes = {
+Navigation.contextTypes = {
   t: PropTypes.func.isRequired
 };
 
