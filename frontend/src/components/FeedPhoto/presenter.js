@@ -4,6 +4,7 @@ import PropTypes from "prop-types";
 import PhotoActions from "components/PhotoActions";
 import PhotoComments from "components/PhotoComments";
 import TimeStamp from "components/TimeStamp";
+import CommentBox from "components/CommentBox";
 
 const FeedPhoto = (props, context) => {
   console.log(props);
