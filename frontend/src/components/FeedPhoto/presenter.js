@@ -7,21 +7,21 @@ import TimeStamp from "components/TimeStamp";
 import CommentBox from "components/CommentBox";
 
 const FeedPhoto = (props, context) => {
-  console.log(props);
   return (
     <div className={styles.feedPhoto}>
-      <hearder>
+      <div className={styles.header}>
         <img
           src={props.creator.profile_img || require("images/noPhoto.jpg")}
           alt={props.creator.username}
+          className={styles.image}
         />
-        <div>
-          <span>{props.creator.username}</span>
-          <span>{props.location}</span>
+        <div className={styles.headerColumn}>
+          <span className={styles.creator}>{props.creator.username}</span>
+          <span className={styles.location}>{props.location}</span>
         </div>
-      </hearder>
+      </div>
       <img src={props.file} alt={props.caption} />
-      <div>
+      <div className={styles.meta}>
         <PhotoActions number={props.like_count} />
         <PhotoComments
           caption={props.caption}

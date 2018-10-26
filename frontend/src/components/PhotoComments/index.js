@@ -3,8 +3,8 @@ import PropTypes from "prop-types";
 import styles from "./styles.module.scss";
 
 const PhotoComments = props => (
-  <div>
-    <ul>
+  <div className={styles.comments}>
+    <ul className={styles.list}>
       <Comment username={props.creator} comments={props.caption} />
       {props.comments.map(comment => (
         <Comment
@@ -18,9 +18,9 @@ const PhotoComments = props => (
 );
 
 const Comment = props => (
-  <li>
-    <span>{props.username}</span>
-    <span>{props.comments}</span>
+  <li className={styles.comment}>
+    <span className={styles.username}>{props.username}</span>{" "}
+    <span className={styles.message}>{props.comments}</span>
   </li>
 );
 
