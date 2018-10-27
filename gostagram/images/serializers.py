@@ -9,10 +9,11 @@ class SmallImageSerializer(serializers.ModelSerializer):
     """Used for Notifications"""
     class Meta:
         model = models.Image
-        fields = ('id','file')
+        fields = ('id', 'file')
+
 
 class ListImageSerializer(serializers.ModelSerializer):
-    
+
     class Meta:
         model = models.Image
         fields = (
@@ -22,8 +23,9 @@ class ListImageSerializer(serializers.ModelSerializer):
             'comment_count'
         )
 
+
 class FeedUserSerializer(serializers.ModelSerializer):
-    
+
     class Meta:
         model = user_models.User
         fields = (
@@ -31,8 +33,9 @@ class FeedUserSerializer(serializers.ModelSerializer):
             'profile_image'
         )
 
+
 class CommentSerializer(serializers.ModelSerializer):
-    
+
     creator = FeedUserSerializer(read_only=True)
 
     class Meta:
@@ -49,6 +52,7 @@ class ImageSerializer(TaggitSerializer, serializers.ModelSerializer):
     comments = CommentSerializer(many=True)
     creator = FeedUserSerializer()
     tags = TagListSerializerField()
+    is_liked = serializers.SerializerMethodField()
 
     class Meta:
         model = models.Image
@@ -62,7 +66,18 @@ class ImageSerializer(TaggitSerializer, serializers.ModelSerializer):
             'like_count',
             'tags',
             'natural_time',
+            'is_liked'
         )
+
+    def get_is_liked(self, obj):
+        if 'request' in self.context:
+            request = self.context['request']
+            try:
+                models.Like.objects.get(creator__id=request.user.id, image__id=obj.id)
+                return True
+            except models.Like.DoesNotExist:
+                return False
+        return False
 
 
 class InputImageSerializer(serializers.ModelSerializer):

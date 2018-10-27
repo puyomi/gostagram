@@ -23,7 +23,7 @@ class Images(APIView):
             image_list.append(image)
         
         sorted_list = sorted(image_list, key=lambda image:image.created_at, reverse=True)
-        serializer = serializers.ImageSerializer(sorted_list, many=True)
+        serializer = serializers.ImageSerializer(sorted_list, many=True, context={'request': request})
         return Response(data=serializer.data)
 
     def post(self, request, format=None):
@@ -50,7 +50,7 @@ class DetailedImage(APIView):
 
         try:
             found_image = models.Image.objects.get(id=image_id)
-            serializer = serializers.ImageSerializer(found_image)
+            serializer = serializers.ImageSerializer(found_image, context={'request':request})
             return Response(data=serializer.data, status=status.HTTP_200_OK)
         except models.Image.DoesNotExist:
             return Response(status=status.HTTP_404_NOT_FOUND)
