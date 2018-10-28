@@ -35,7 +35,10 @@
     }
     .button2 {
       @include blueButton();
-      color: white;
+      box-sizing: border-box;
+      background-color: white;
+      color: black;
+      border: 1px solid $dark-grey;
     }
   }
 }

@@ -10,24 +10,22 @@ const UserRow = props => (
         src={props.user.profile_image || require("images/noPhoto.jpg")}
         alt={props.user.username}
       />
-
       <div className={styles.user}>
         <span className={styles.username}>{props.user.username}</span>
         <span className={styles.name}>{props.user.name}</span>
       </div>
-
-      <span className={styles.column}>
-        {props.user.following ? (
-          <button className={styles.button2} onClick={props.handleClick}>
-            팔로잉
-          </button>
-        ) : (
-          <button className={styles.button} onClick={props.handleClick}>
-            팔로우
-          </button>
-        )}
-      </span>
     </div>
+    <span className={styles.column}>
+      {props.user.following ? (
+        <button className={styles.button2} onClick={props.handleClick}>
+          팔로잉
+        </button>
+      ) : (
+        <button className={styles.button} onClick={props.handleClick}>
+          팔로우
+        </button>
+      )}
+    </span>
   </div>
 );
 
