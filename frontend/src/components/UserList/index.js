@@ -7,6 +7,4 @@ const mapStateToProps = (state, onwProps) =>{
         userList
     }
 }
-
-
 export default connect(mapStateToProps)(Container);

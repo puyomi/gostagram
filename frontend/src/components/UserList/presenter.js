@@ -3,8 +3,7 @@ import styles from "./styles.module.scss";
 import Ionicon from "react-ionicons";
 import Loading from "components/Loading";
 import PropTypes from "prop-types";
-import UserRow from "components/UserRow"
-
+import UserRow from "components/UserRow";
 
 const UserList = props => (
   <div className={styles.container}>
@@ -22,9 +21,8 @@ const UserList = props => (
   </div>
 );
 
-const RenderUsers = props => {
+const RenderUsers = props =>
   props.list.map(user => <UserRow user={user} key={user.id} />);
-};
 
 UserList.propTypes = {
   title: PropTypes.string.isRequired,

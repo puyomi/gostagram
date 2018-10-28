@@ -88,7 +88,7 @@ class LikeImage(APIView):
         likes = models.Like.objects.filter(image__id=image_id)
         like_creator_ids = likes.values('creator_id')
         likes_list = user_models.User.objects.filter(id__in=like_creator_ids)
-        serializer = user_serializers.ListUserSerializer(likes_list, many=True)
+        serializer = user_serializers.ListUserSerializer(likes_list, many=True, context={"request":request})
         return Response(data=serializer.data ,status=status.HTTP_200_OK)
 
 
